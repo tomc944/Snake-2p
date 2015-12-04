@@ -1,0 +1,23 @@
+.snake {
+  width: 700px;
+  margin: 0 auto;
+}
+
+div {
+  float: left;
+  height: 14px;
+  width: 14px;
+  background-color: black;
+}
+
+.snake-segment {
+  background-color: white;
+}
+
+.snake-segment2 {
+  background-color: blue;
+}
+
+.apple {
+  background-color: red;
+}
