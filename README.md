@@ -10,3 +10,5 @@ Snake Game
 2. Write a simple View Class
 
 3. Add apples to the game and detect gameover
+
+4. Implemented two player functionality
