@@ -7,7 +7,7 @@ function View(rootEl) {
   this.$rootEl = rootEl;
   this.setupBoard();
   this.registerEvents();
-  this.intervalId = window.setInterval(this.step.bind(this), 150);
+  this.intervalId = window.setInterval(this.step.bind(this), 50);
 }
 
 window.$l.extend(View.prototype, {
@@ -49,8 +49,10 @@ window.$l.extend(View.prototype, {
       window.$l('.snake').
         find('.row-' + row + '-col-'+ col).addClass('snake-segment2');
     });
+
     window.$l('div').removeClass('apple');
     var applePos = this.board.applePos;
+    
     window.$l('.snake').
       find('.row-' + applePos[0]+ "-col-" + applePos[1]).addClass('apple');
   },

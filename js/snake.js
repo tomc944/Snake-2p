@@ -99,18 +99,24 @@ Board.prototype.turnSnake = function (key) {
 };
 
 Board.prototype.isGameOver = function() {
-    var snakeHead1 = this.snake.segments[0];
-    var snakeHead2 = this.snake2.segments[0];
-  if (this.snakeCollisons() || this.isHeadHittingWall(snakeHead1) || this.isHeadHittingWall(snakeHead2)) {
+  this.snakeHead1 = this.snake.segments[0];
+  this.snakeHead2 = this.snake2.segments[0];
+
+  if (this.checkAllCollisions()) {
     return true;
   } else {
     return false;
   }
 };
 
+Board.prototype.checkAllCollisions = function() {
+  return (this.snakeCollisons() ||
+    this.isHeadHittingWall(this.snakeHead1) ||
+    this.isHeadHittingWall(this.snakeHead2))
+}
+
 Board.prototype.snakeSamePosition = function (i, j) {
   var totalSnakeSegments = this.snakeSegments();
-  console.log(JSON.stringify(totalSnakeSegments));
   return totalSnakeSegments[i][0] === totalSnakeSegments[j][0] &&
   totalSnakeSegments[i][1] === totalSnakeSegments[j][1];
 };

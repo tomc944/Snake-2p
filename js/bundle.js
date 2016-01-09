@@ -65,7 +65,7 @@
 	  this.$rootEl = rootEl;
 	  this.setupBoard();
 	  this.registerEvents();
-	  this.intervalId = window.setInterval(this.step.bind(this), 150);
+	  this.intervalId = window.setInterval(this.step.bind(this), 50);
 	}
 
 	window.$l.extend(View.prototype, {
@@ -107,8 +107,10 @@
 	      window.$l('.snake').
 	        find('.row-' + row + '-col-'+ col).addClass('snake-segment2');
 	    });
+
 	    window.$l('div').removeClass('apple');
 	    var applePos = this.board.applePos;
+	    
 	    window.$l('.snake').
 	      find('.row-' + applePos[0]+ "-col-" + applePos[1]).addClass('apple');
 	  },
@@ -231,18 +233,24 @@
 	};
 
 	Board.prototype.isGameOver = function() {
-	    var snakeHead1 = this.snake.segments[0];
-	    var snakeHead2 = this.snake2.segments[0];
-	  if (this.snakeCollisons() || this.isHeadHittingWall(snakeHead1) || this.isHeadHittingWall(snakeHead2)) {
+	  this.snakeHead1 = this.snake.segments[0];
+	  this.snakeHead2 = this.snake2.segments[0];
+
+	  if (this.checkAllCollisions()) {
 	    return true;
 	  } else {
 	    return false;
 	  }
 	};
 
+	Board.prototype.checkAllCollisions = function() {
+	  return (this.snakeCollisons() ||
+	    this.isHeadHittingWall(this.snakeHead1) ||
+	    this.isHeadHittingWall(this.snakeHead2))
+	}
+
 	Board.prototype.snakeSamePosition = function (i, j) {
 	  var totalSnakeSegments = this.snakeSegments();
-	  console.log(JSON.stringify(totalSnakeSegments));
 	  return totalSnakeSegments[i][0] === totalSnakeSegments[j][0] &&
 	  totalSnakeSegments[i][1] === totalSnakeSegments[j][1];
 	};
