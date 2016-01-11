@@ -3,7 +3,7 @@
   margin: 0 auto;
 }
 
-div {
+.board-piece {
   float: left;
   height: 14px;
   width: 14px;
@@ -24,5 +24,18 @@ div {
 
 
 .title {
-    text-align: center;
+  text-align: center;
+}
+
+.game-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+.onep, .twop {
+  width: 700px;
+  height: 50px;
+  margin: 0 auto;
+  display: inline-block;
 }

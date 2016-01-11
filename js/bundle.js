@@ -65,6 +65,8 @@
 	  this.$rootEl = rootEl;
 	  this.setupBoard();
 	  this.registerEvents();
+	  // this.currentScore = 0;
+	  // this.setScore();
 	  this.intervalId = window.setInterval(this.step.bind(this), 50);
 	}
 
@@ -75,19 +77,31 @@
 	        var $div = document.createElement('div');
 	        $div = window.$l($div);
 	        $div.addClass('row-' + i + '-col-'+j);
+	        $div.addClass('board-piece');
 	        this.$rootEl.append($div);
 	      }
 	    }
 	  },
+	  //
+	  // setScore: function() {
+	  //   var $score = window.$l('.score')
+	  //   $score.html("Score: " + this.currentScore);
+	  // },
 
 	  registerEvents: function() {
 	    document.addEventListener('keydown', this.handleKeyEvent.bind(this));
+	    document.addEventListener('click', this.handleMouseEvent.bind(this));
 	  },
 
 	  handleKeyEvent: function(e) {
 	    var code = e.keyCode;
 	    var direction = (String.fromCharCode(code)).toLowerCase();
 	    this.board.turnSnake(direction);
+	  },
+
+	  handleMouseEvent: function(e) {
+	    window.$l('.twop').remove();
+	    this.board.playing = true;
 	  },
 
 	  render: function() {
@@ -101,6 +115,7 @@
 	        find('.row-' + row + '-col-'+ col).addClass('snake-segment');
 	    });
 
+
 	    this.board.snake2.segments.forEach(function(pos) {
 	      var row = pos[0];
 	      var col = pos[1];
@@ -110,17 +125,32 @@
 
 	    window.$l('div').removeClass('apple');
 	    var applePos = this.board.applePos;
-	    
+
 	    window.$l('.snake').
 	      find('.row-' + applePos[0]+ "-col-" + applePos[1]).addClass('apple');
+
+	    // if (this.appleCollision()) {
+	    //   this.currentScore += 10;
+	    //   this.setScore();
+	    // }
+
 	  },
 
+	  // appleCollision: function () {
+	  //   var snakeHead = this.board.snake.segments[0]
+	  //
+	  //   return (this.board.applePos[0] === snakeHead[0] &&
+	  //           this.board.applePos[1] === snakeHead[1])
+	  // },
+
 	  step: function() {
-	    this.board.moveSnake();
-	    this.render();
-	    if (this.board.gameOver) {
-	      window.clearInterval(this.intervalId);
-	      alert("Gameover!");
+	    if (this.board.playing === true) {
+	      this.board.moveSnake();
+	      this.render();
+	      if (this.board.gameOver) {
+	        window.clearInterval(this.intervalId);
+	        alert("Gameover!");
+	      }
 	    }
 	  },
 	});
@@ -130,7 +160,9 @@
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
+
+	View = __webpack_require__(1)
 
 	var KEYS1 = ['w', 's', 'a', 'd'];
 	var KEYS2 = ['i', 'k', 'j', 'l'];
@@ -201,11 +233,13 @@
 	  this.boardSize = boardSize;
 	  this.gameOver = false;
 	  this.randomApple();
+	  this.playing = false;
 	}
+
+
 
 	Board.prototype.snakeSegments = function () {
 	  return this.snake2.segments.concat(this.snake.segments);
-
 	};
 
 	Board.prototype.moveSnake = function() {
@@ -285,9 +319,7 @@
 	  } else {
 	    return false;
 	  }
-
 	};
-
 
 	Board.prototype.randomApple = function() {
 	  do {

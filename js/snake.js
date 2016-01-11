@@ -1,3 +1,5 @@
+View = require('./snake-view.js')
+
 var KEYS1 = ['w', 's', 'a', 'd'];
 var KEYS2 = ['i', 'k', 'j', 'l'];
 var DIFF = [[-1,  0],
@@ -67,11 +69,13 @@ function Board(boardSize) {
   this.boardSize = boardSize;
   this.gameOver = false;
   this.randomApple();
+  this.playing = false;
 }
+
+
 
 Board.prototype.snakeSegments = function () {
   return this.snake2.segments.concat(this.snake.segments);
-
 };
 
 Board.prototype.moveSnake = function() {
@@ -151,9 +155,7 @@ Board.prototype.isEatingApple = function(snake) {
   } else {
     return false;
   }
-
 };
-
 
 Board.prototype.randomApple = function() {
   do {

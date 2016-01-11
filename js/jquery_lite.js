@@ -60,6 +60,7 @@ if (typeof $l === 'undefined') {
     if (arguments.length === 0){
       return this.nodes[0].innerHTML;
     } else {
+      this.innerHTML = string;
       this.nodes.forEach(function (node) {
         node.innerHTML = string;
       });
@@ -68,6 +69,10 @@ if (typeof $l === 'undefined') {
 
   Dom.prototype.empty = function () {
     this.html("");
+  };
+
+  Dom.prototype.text = function (string) {
+    this.textContent = string
   };
 
   Dom.prototype.append = function(obj) {
@@ -181,9 +186,4 @@ if (typeof $l === 'undefined') {
       node.removeEventListener(e, handler);
     });
   };
-
-
-
-
-
 })();
